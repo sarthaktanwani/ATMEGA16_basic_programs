@@ -1,0 +1,150 @@
+
+rx.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000000be  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .debug_aranges 00000020  00000000  00000000  00000112  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  2 .debug_pubnames 0000002a  00000000  00000000  00000132  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  3 .debug_info   000000a2  00000000  00000000  0000015c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_abbrev 0000006c  00000000  00000000  000001fe  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_line   000000ac  00000000  00000000  0000026a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_frame  00000030  00000000  00000000  00000318  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_str    00000089  00000000  00000000  00000348  2**0
+                  CONTENTS, READONLY, DEBUGGING
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+   8:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+   c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  10:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  14:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  18:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  1c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  20:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  24:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  28:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  2c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  30:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  34:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  38:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  3c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  40:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  44:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  48:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  4c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  50:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d4 e0       	ldi	r29, 0x04	; 4
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_copy_data>:
+  60:	10 e0       	ldi	r17, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	ee eb       	ldi	r30, 0xBE	; 190
+  68:	f0 e0       	ldi	r31, 0x00	; 0
+  6a:	02 c0       	rjmp	.+4      	; 0x70 <.do_copy_data_start>
+
+0000006c <.do_copy_data_loop>:
+  6c:	05 90       	lpm	r0, Z+
+  6e:	0d 92       	st	X+, r0
+
+00000070 <.do_copy_data_start>:
+  70:	a0 36       	cpi	r26, 0x60	; 96
+  72:	b1 07       	cpc	r27, r17
+  74:	d9 f7       	brne	.-10     	; 0x6c <.do_copy_data_loop>
+
+00000076 <__do_clear_bss>:
+  76:	10 e0       	ldi	r17, 0x00	; 0
+  78:	a0 e6       	ldi	r26, 0x60	; 96
+  7a:	b0 e0       	ldi	r27, 0x00	; 0
+  7c:	01 c0       	rjmp	.+2      	; 0x80 <.do_clear_bss_start>
+
+0000007e <.do_clear_bss_loop>:
+  7e:	1d 92       	st	X+, r1
+
+00000080 <.do_clear_bss_start>:
+  80:	a0 36       	cpi	r26, 0x60	; 96
+  82:	b1 07       	cpc	r27, r17
+  84:	e1 f7       	brne	.-8      	; 0x7e <.do_clear_bss_loop>
+  86:	0e 94 49 00 	call	0x92	; 0x92 <main>
+  8a:	0c 94 5d 00 	jmp	0xba	; 0xba <_exit>
+
+0000008e <__bad_interrupt>:
+  8e:	0c 94 00 00 	jmp	0	; 0x0 <__heap_end>
+
+00000092 <main>:
+ #define F_CPU 8000000UL
+ #include<avr/io.h>
+ #include<util/delay.h>
+ void usart_init();
+ int main()
+ {
+  92:	8f ef       	ldi	r24, 0xFF	; 255
+  94:	84 bb       	out	0x14, r24	; 20
+ }
+ 
+ 
+ void usart_init()
+ {
+ 	UBRRL=51;
+  96:	83 e3       	ldi	r24, 0x33	; 51
+  98:	89 b9       	out	0x09, r24	; 9
+ 	UCSRB=UCSRB|(1<<RXEN);
+  9a:	54 9a       	sbi	0x0a, 4	; 10
+ 	UCSRC=UCSRC|(1<<URSEL)|(1<<UCSZ1)|(1<<UCSZ0);
+  9c:	80 b5       	in	r24, 0x20	; 32
+  9e:	86 68       	ori	r24, 0x86	; 134
+  a0:	80 bd       	out	0x20, r24	; 32
+ {
+   DDRC=0xff;
+   usart_init();
+   while(1)
+   {
+     while( (UCSRA&(1<<RXC))==0);
+  a2:	5f 9b       	sbis	0x0b, 7	; 11
+  a4:	fe cf       	rjmp	.-4      	; 0xa2 <main+0x10>
+	 PORTC=UDR;
+  a6:	8c b1       	in	r24, 0x0c	; 12
+  a8:	85 bb       	out	0x15, r24	; 21
+  aa:	fb cf       	rjmp	.-10     	; 0xa2 <main+0x10>
+
+000000ac <usart_init>:
+   }
+ }
+ 
+ 
+ void usart_init()
+ {
+  ac:	83 e3       	ldi	r24, 0x33	; 51
+  ae:	89 b9       	out	0x09, r24	; 9
+ 	UBRRL=51;
+ 	UCSRB=UCSRB|(1<<RXEN);
+  b0:	54 9a       	sbi	0x0a, 4	; 10
+ 	UCSRC=UCSRC|(1<<URSEL)|(1<<UCSZ1)|(1<<UCSZ0);
+  b2:	80 b5       	in	r24, 0x20	; 32
+  b4:	86 68       	ori	r24, 0x86	; 134
+  b6:	80 bd       	out	0x20, r24	; 32
+ }
+  b8:	08 95       	ret
+
+000000ba <_exit>:
+  ba:	f8 94       	cli
+
+000000bc <__stop_program>:
+  bc:	ff cf       	rjmp	.-2      	; 0xbc <__stop_program>
